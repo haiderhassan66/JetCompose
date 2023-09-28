@@ -32,16 +32,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetcompose.quotesApp.DataManager
+import com.example.jetcompose.quotesApp.screens.QuoteListScreen
 import com.example.jetcompose.ui.theme.JetComposeTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class MainActivity : ComponentActivity() {
+ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CoroutineScope(Dispatchers.IO).launch{
+            DataManager.loadAssetsFromFile(applicationContext)
+        }
         setContent {
-            NotificationScreen()
+//            NotificationScreen()
+            App()
         }
     }
 }
+
+ @Composable
+ fun App() {
+     if (DataManager.isDataLoaded.value){
+         QuoteListScreen(data = DataManager.data) {
+             
+         }
+     }
+ }
 
  @Preview(showBackground = true, showSystemUi = true)
  @Composable

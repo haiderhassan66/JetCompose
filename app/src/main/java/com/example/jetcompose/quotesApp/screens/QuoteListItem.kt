@@ -1,7 +1,8 @@
-package com.example.jetcompose.quotesApp
+package com.example.jetcompose.quotesApp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,12 +33,18 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.jetcompose.quotesApp.models.Quote
 
 @Composable
-fun QuoteListItem(){
+fun QuoteListItem(quote: Quote, onClick: ()->Unit){
     Card(
         elevation = CardDefaults.cardElevation(4.dp),
-        modifier = Modifier.padding(8.dp)) {
+        modifier = Modifier.padding(8.dp)
+            .clickable {
+                onClick()
+            }
+    )
+    {
         Row(
             modifier = Modifier.padding(16.dp)
         ) {
@@ -54,7 +61,7 @@ fun QuoteListItem(){
             Spacer(modifier = Modifier.padding(4.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "Time is the most valuable thing a man can spend.",
+                    text = quote.text,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(0.dp,0.dp,0.dp,8.dp)
                     )
@@ -65,7 +72,7 @@ fun QuoteListItem(){
                         .height(1.dp)
                 )
                 Text(
-                    text = "Theophrastus",
+                    text = quote.author,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Thin,
                     modifier = Modifier.padding(top = 4.dp)

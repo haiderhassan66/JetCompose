@@ -1,4 +1,4 @@
-package com.example.jetcompose.quotesApp
+package com.example.jetcompose.quotesApp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,9 +23,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.jetcompose.quotesApp.models.Quote
 
 @Composable
-fun QuoteDetail() {
+fun QuoteDetail(quote: Quote) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -57,12 +58,12 @@ fun QuoteDetail() {
                         .rotate(180f)
                 )
                 Text(
-                    text = "Time is the most valuable thing a man can spend",
+                    text = quote.text,
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Theophrastus",
+                    text = quote.author,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
