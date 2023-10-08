@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetcompose.quotesApp.DataManager
+import com.example.jetcompose.quotesApp.screens.QuoteDetail
 import com.example.jetcompose.quotesApp.screens.QuoteListScreen
 import com.example.jetcompose.ui.theme.JetComposeTheme
 import kotlinx.coroutines.CoroutineScope
@@ -55,10 +56,28 @@ import kotlinx.coroutines.launch
  @Composable
  fun App() {
      if (DataManager.isDataLoaded.value){
-         QuoteListScreen(data = DataManager.data) {
-             
+         if (DataManager.currentPage.value == Pages.LISTING){
+             QuoteListScreen(data = DataManager.data) {
+                 DataManager.switchPages(it)
+             }
+         } else {
+             DataManager.currentQuote?.let { QuoteDetail(quote = it) }
+         }
+
+     } else {
+         Box(
+             contentAlignment = Alignment.Center,
+             modifier = Modifier.fillMaxSize(1f))
+         {
+             Text(text = "Loading...",
+                 style = MaterialTheme.typography.titleSmall)
          }
      }
+ }
+
+ enum class Pages{
+     LISTING,
+     DETAIL
  }
 
  @Preview(showBackground = true, showSystemUi = true)
